@@ -40,3 +40,4 @@ class PadToSquare:
         new_img.paste(img, (x_offset, y_offset))
         
         return new_img
+    
