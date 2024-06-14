@@ -1,4 +1,5 @@
 from PIL import Image
+
 class ImgResize(object):
     def __call__(self, img: Image, output_size=(256,256)):
         '''

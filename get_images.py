@@ -15,13 +15,11 @@ def download(url, fn, num):
         with open(os.path.join(fn, str(num)+".jpg"), 'wb') as file:
             file.write(response.content)
 
-s = webdriver.ChromeService(executable_path='C:\\Users\\Usern\\Projects\\Python\\PlanetClassifier\\GetImages\\chromedriver.exe')
+s = webdriver.ChromeService(executable_path='C:\\Users\\Usern\\Projects\\Python\\PlanetClassifier\\chromedriver.exe')
 driver = webdriver.Chrome(service=s)
 
-search_URL = "https://www.google.com/search?q=earth&tbm=isch&ved=2ahUKEwiIqOPA8NSGAxU9JGIAHVkOC5kQ2-cCegQIABAA&oq=earth&gs_lp=EgNpbWciBWVhcnRoMg0QABiABBixAxhDGIoFMgoQABiABBhDGIoFMgoQABiABBhDGIoFMgoQABiABBhDGIoFMg0QABiABBixAxhDGIoFMgoQABiABBhDGIoFMgoQABiABBhDGIoFMgoQABiABBhDGIoFMg0QABiABBixAxhDGIoFMgoQABiABBhDGIoFSNMKUJ0JWJ0JcAB4AJABAJgBTKABlwGqAQEyuAEDyAEA-AEBigILZ3dzLXdpei1pbWfCAgUQABiABIgGAQ&sclient=img&ei=PfVoZsiVO73IiLMP2ZysyAk&bih=739&biw=1536&cs=1&hl=en-US"
+search_URL = "https://www.google.com/search?q=saturn%20planet&udm=2&tbs=rimg:CcR8yO1hbhc4YRa88HZDPI4OsgIAwAIA2AIA4AIA&cs=1&hl=en&sa=X&ved=0CBoQuIIBahcKEwjg-bXPytmGAxUAAAAAHQAAAAAQBw&biw=1536&bih=738&dpr=1.25"
 driver.get(search_URL)
-
-open = True
 
 start = input("Waiting for user input...")
 
@@ -35,18 +33,20 @@ containers = pageSoup.findAll('div', {'class':"eA0Zlc WghbWd FnEtTd mkpRId m3LIa
 len_containers = len(containers)
 print(f"Found {len_containers} images")
 
-folder_name = 'ImageData\Earth'
+folder_name = 'ImageData\\Saturn'
 for i in range(1, len_containers+1):
     if i%25 == 0:
         continue
 
     xpath = f"""//*[@id="rso"]/div/div/div[1]/div/div/div[{i}]"""
 
-    driver.find_element(By.XPATH, xpath).click()
-    time.sleep(1.5) #delaying so that full res image can load
+    try:
+        driver.find_element(By.XPATH, xpath).click()
+        time.sleep(1.5) #delaying so that full res image can load
 
-    img_element = driver.find_element(By.XPATH, """//*[@id="Sva75c"]/div[2]/div[2]/div[2]/div[2]/c-wiz/div/div/div/div/div[3]/div[1]/a/img[1]""")
-    img_URL = img_element.get_attribute("src")
+        img_element = driver.find_element(By.XPATH, """//*[@id="Sva75c"]/div[2]/div[2]/div[2]/div[2]/c-wiz/div/div/div/div/div[3]/div[1]/a/img[1]""")
+        img_URL = img_element.get_attribute("src")
+        download(img_URL, folder_name, i+173)
 
-    download(img_URL, folder_name, i)
-    
+    except:
+         continue
