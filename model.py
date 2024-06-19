@@ -79,9 +79,7 @@ class convModel(nn.Module):
         else:
             print("No saved model found")
 
-
 model = convModel(3, 10, 8)
-print(model.parameters())
 
 LR = 0.1
 optimizer = torch.optim.Adam(params=model.parameters(), lr=LR)
