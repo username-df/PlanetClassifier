@@ -10,7 +10,7 @@ class convModel(nn.Module):
             nn.Conv2d(in_channels=input,
                     out_channels=hidden,
                     kernel_size=3, 
-                    stride=1,
+                    stride=2,
                     padding=1),
             nn.ReLU(),
 
@@ -46,7 +46,7 @@ class convModel(nn.Module):
 
         self.classifier = nn.Sequential(
             nn.Flatten(),
-            nn.Linear(hidden*28*28, output)
+            nn.Linear(hidden*14*14, output)
         )
     
     def forward(self, x):
@@ -79,8 +79,8 @@ class convModel(nn.Module):
         else:
             print("No saved model found")
 
-model = convModel(3, 10, 8)
+model = convModel(3, 24, 8)
 
-LR = 0.1
+LR = 0.0001
 optimizer = torch.optim.Adam(params=model.parameters(), lr=LR)
 lossfn = nn.CrossEntropyLoss()
