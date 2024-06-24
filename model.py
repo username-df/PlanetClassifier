@@ -79,6 +79,7 @@ class convModel(nn.Module):
         else:
             print("No saved model found")
 
+torch.manual_seed(0)
 model = convModel(3, 24, 8)
 
 LR = 0.0001
