@@ -48,3 +48,5 @@ for epoch in range(epochs):
     print(f"Test loss: {test_loss:.2f} | Test Accuracy: {test_acc*100:.2f}%\n")
 
     print()
+
+model.save()
