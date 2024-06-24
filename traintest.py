@@ -1,5 +1,5 @@
 import torch
-from model import model, lossfn, optimizer
+from convModel import model, lossfn, optimizer
 from create_dataset import train_data, test_data
 
 accfn = lambda y, prd: ((y == prd.argmax(dim=1)).sum()) / len(prd)
