@@ -82,6 +82,6 @@ class convModel(nn.Module):
 torch.manual_seed(0)
 model = convModel(3, 24, 8)
 
-LR = 0.0001
+LR = 0.00005
 optimizer = torch.optim.Adam(params=model.parameters(), lr=LR)
 lossfn = nn.CrossEntropyLoss()
