@@ -48,13 +48,18 @@ transform = transforms.Compose([
                          std=[0.32638136, 0.30372527, 0.31044443])
     ])
 
-
 dataset = ImageFolder("ImageData", transform=transform)
-train_set, test_set = train_test_split(dataset, test_size=0.2, random_state=0)
+
+temp, test_set = train_test_split(dataset, test_size=0.2, random_state=0)
+train_set, val_set = train_test_split(temp, test_size=0.25, random_state=0)
 
 train_data = DataLoader(dataset=train_set,
                         batch_size=BATCH_SIZE,
                         shuffle=True)
+
+val_data = DataLoader(dataset=val_set,
+                        batch_size=BATCH_SIZE,
+                        shuffle=False)
 
 test_data = DataLoader(dataset=test_set,
                             batch_size=BATCH_SIZE,
