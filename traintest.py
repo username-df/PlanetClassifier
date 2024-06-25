@@ -64,5 +64,6 @@ with torch.inference_mode():
     test_loss /= len(test_data)
     test_acc /= len(test_data)
 
+print(f"---------------- Testing ---------------------")
 print(f"Test loss: {test_loss:.2f} | Test Accuracy: {test_acc*100:.2f}%\n")
 model.save()
