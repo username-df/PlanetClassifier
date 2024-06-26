@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Planet Classifier</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-repeat: no-repeat; 
+            color: white;
+        }
+
+        .header {
+            position: fixed;
+            text-align: center;
+            width: 100%;
+            bottom: 550px;
+            font-size: 40px;
+        }
+
+        .text {
+            position: fixed;
+            text-align: center;
+            width: 100%;
+            bottom: 440px;
+            font-size: 30px
+        }
+
+        .button {
+            position: fixed;
+            text-align: center;
+            width: 105%;
+            bottom: 300px;
+            font-size: 30px
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>The Planet Classifier.</h1>
+    </div>
+
+    <div class="text">
+        <p>Upload a clear picture of a planet to have it classified. </p>
+    </div>
+
+    <div class="button">
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" id="fileUpload" name="fileUpload" accept="image/*">
+            <br><br>
+        </form>
+    </div>
+</body>
+</html>
