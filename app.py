@@ -39,7 +39,7 @@ def upload():
         result = f"The model has identified this image as {class_names[prd.argmax(dim=1)]}!"
 
     resizer = ImgResize()
-    uploaded_img = resizer(img=uploaded_img, output_size=(600, 600))
+    uploaded_img = resizer(img=uploaded_img, output_size=(500, 500))
 
     uploaded_img.save(output, format='JPEG')
     uploaded_img = (base64.b64encode(output.getvalue())).decode('utf-8')
@@ -48,4 +48,4 @@ def upload():
     return render_template('uploadpage.html', uploaded_img=uploaded_img, result=result)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
