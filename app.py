@@ -36,7 +36,7 @@ def upload():
     model.eval()
     with torch.inference_mode():
         prd = model(X)
-        result = f"The model has classified the image as {class_names[prd.argmax(dim=1)]}!"
+        result = f"The model has identified the image as {class_names[prd.argmax(dim=1)]}!"
 
     resizer = ImgResize()
     uploaded_img = resizer(img=uploaded_img, output_size=(600, 600))
