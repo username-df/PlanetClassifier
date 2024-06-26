@@ -3,3 +3,4 @@ ImageData
 __pycache__
 model
 *.jpg
+*.jpeg
