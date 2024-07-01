@@ -12,6 +12,8 @@ class convModel(nn.Module):
                     kernel_size=3, 
                     stride=2,
                     padding=1),
+            nn.BatchNorm2d(hidden),
+
             nn.ReLU(),
 
             nn.Conv2d(in_channels=hidden,
@@ -19,10 +21,11 @@ class convModel(nn.Module):
                     kernel_size=3,
                     stride=1,
                     padding=1),
+            nn.BatchNorm2d(hidden),
+
             nn.ReLU(),
 
-            nn.MaxPool2d(kernel_size=3),
-            nn.BatchNorm2d(hidden)
+            nn.MaxPool2d(kernel_size=3)
         )
 
         self.convblock2 = nn.Sequential(
@@ -31,17 +34,20 @@ class convModel(nn.Module):
                     kernel_size=3,
                     stride=1,
                     padding=1),
+            nn.BatchNorm2d(hidden),
 
             nn.ReLU(),
+
             nn.Conv2d(in_channels=hidden,
                     out_channels=hidden,
                     kernel_size=3,
                     stride=1,
                     padding=1),
-
+            nn.BatchNorm2d(hidden),
+            
             nn.ReLU(),
-            nn.MaxPool2d(kernel_size=3),
-            nn.BatchNorm2d(hidden)
+
+            nn.MaxPool2d(kernel_size=3)
         )
 
         self.classifier = nn.Sequential(
