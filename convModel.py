@@ -6,61 +6,57 @@ class convModel(nn.Module):
     def __init__(self, input, hidden, output):
         super().__init__()
 
-        self.convblock1 = nn.Sequential(
+        self.convblock = nn.Sequential(
             nn.Conv2d(in_channels=input,
                     out_channels=hidden,
-                    kernel_size=3, 
+                    kernel_size=5, 
+                    stride=1,
+                    padding=1),
+            nn.BatchNorm2d(hidden),
+
+            nn.ReLU(),
+
+            nn.AvgPool2d(kernel_size=3),
+
+            nn.Conv2d(in_channels=hidden,
+                    out_channels=hidden,
+                    kernel_size=3,
                     stride=2,
                     padding=1),
             nn.BatchNorm2d(hidden),
 
             nn.ReLU(),
-
+    
             nn.Conv2d(in_channels=hidden,
-                    out_channels=hidden,
-                    kernel_size=3,
-                    stride=1,
-                    padding=1),
+                      out_channels=hidden,
+                      kernel_size=3,
+                      stride=2,
+                      padding=1),
             nn.BatchNorm2d(hidden),
 
             nn.ReLU(),
 
-            nn.MaxPool2d(kernel_size=3)
-        )
-
-        self.convblock2 = nn.Sequential(
-            nn.Conv2d(in_channels=hidden,
-                    out_channels=hidden,
-                    kernel_size=3,
-                    stride=1,
-                    padding=1),
-            nn.BatchNorm2d(hidden),
-
-            nn.ReLU(),
-
-            nn.Conv2d(in_channels=hidden,
-                    out_channels=hidden,
-                    kernel_size=3,
-                    stride=1,
-                    padding=1),
-            nn.BatchNorm2d(hidden),
-            
-            nn.ReLU(),
-
-            nn.MaxPool2d(kernel_size=3)
+            nn.AvgPool2d(kernel_size=2)
         )
 
         self.classifier = nn.Sequential(
             nn.Flatten(),
-            nn.Linear(hidden*14*14, output)
+            nn.Linear(hidden*10*10, output)
         )
     
     def forward(self, x):
-        x = self.convblock1(x)
-        x = self.convblock2(x)
+        x = self.convblock(x)
         x = self.classifier(x)
         return x
     
+    def test(self, str):
+        from PIL import Image
+        from create_dataset import transform
+        x = Image.open(str)
+        x = transform(x).unsqueeze(dim=0)
+        x = self.convblock(x)
+        print(x.shape)
+
     def save(self, file_name='saved.pth'):
         model_folder_path = './model'
 
@@ -86,8 +82,8 @@ class convModel(nn.Module):
             print("No saved model found")
 
 torch.manual_seed(0)
-model = convModel(3, 24, 8)
+model = convModel(3, 16, 8)
 
-LR = 0.00005
+LR = 0.0001
 optimizer = torch.optim.Adam(params=model.parameters(), lr=LR)
 lossfn = nn.CrossEntropyLoss()
