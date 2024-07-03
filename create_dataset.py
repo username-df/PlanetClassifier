@@ -38,7 +38,7 @@ class PadToSquare:
         
         return new_img
 
-BATCH_SIZE = 64
+BATCH_SIZE = 32
 
 transform = transforms.Compose([
     ImgResize(),
