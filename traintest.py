@@ -4,7 +4,7 @@ from create_dataset import train_data, val_data, test_data
 
 accfn = lambda y, prd: ((y == prd.argmax(dim=1)).sum()) / len(prd)
 
-epochs = 50
+epochs = 30
 
 for epoch in range(epochs):
     #------------- Train ----------------
