@@ -48,4 +48,4 @@ def upload():
     return render_template('uploadpage.html', uploaded_img=uploaded_img, result=result)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
