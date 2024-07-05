@@ -44,8 +44,8 @@ transform = transforms.Compose([
     ImgResize(),
     PadToSquare(),
     transforms.ToTensor(),
-    transforms.Normalize(mean=[0.26495954, 0.2492023, 0.25132638], 
-                         std=[0.25069976, 0.23862453, 0.23362982])
+    transforms.Normalize(mean=[0.26316062, 0.24574313, 0.24588147], 
+                         std=[0.2500974, 0.23573072, 0.22842711])
 ])
     
 
