@@ -12,36 +12,38 @@ class convModel(nn.Module):
                     kernel_size=3, 
                     stride=1,
                     padding=1),
+            nn.AvgPool2d(kernel_size=3),
             nn.BatchNorm2d(hidden),
 
             nn.ReLU(),
-
-            nn.AvgPool2d(kernel_size=3),
+            nn.Dropout(p=0.5),
 
             nn.Conv2d(in_channels=hidden,
                     out_channels=hidden,
                     kernel_size=3,
                     stride=1,
                     padding=1),
+            nn.AvgPool2d(kernel_size=3),
             nn.BatchNorm2d(hidden),
 
             nn.ReLU(),
-    
+            nn.Dropout(p=0.5),
+
             nn.Conv2d(in_channels=hidden,
                       out_channels=hidden,
                       kernel_size=3,
                       stride=1,
                       padding=1),
+            nn.AvgPool2d(kernel_size=3),
             nn.BatchNorm2d(hidden),
 
             nn.ReLU(),
-
-            nn.AvgPool2d(kernel_size=3)
+            nn.Dropout(p=0.5)
         )
 
         self.classifier = nn.Sequential(
             nn.Flatten(),
-            nn.Linear(hidden*28*28, output)
+            nn.Linear(hidden*9*9, output)
         )
     
     def forward(self, x):
@@ -69,7 +71,7 @@ class convModel(nn.Module):
             'model_state_dict': self.state_dict(), 
             }, file_name)
 
-    def load(self, file_name='saved.pth'):
+    def load(self, file_name='saved11.pth'):
         model_folder_path = './model'
         file_path = os.path.join(model_folder_path, file_name)
 
@@ -82,7 +84,7 @@ class convModel(nn.Module):
             print("No saved model found")
 
 torch.manual_seed(0)
-model = convModel(3, 16, 8)
+model = convModel(3, 128, 8)
 
 LR = 0.0001
 optimizer = torch.optim.Adam(params=model.parameters(), lr=LR)
