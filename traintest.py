@@ -4,7 +4,7 @@ from create_dataset import train_data, val_data, test_data
 
 accfn = lambda y, prd: ((y == prd.argmax(dim=1)).sum()) / len(prd)
 
-epochs = 30
+epochs = 15
 
 for epoch in range(epochs):
     #------------- Train ----------------
@@ -41,6 +41,7 @@ for epoch in range(epochs):
         val_loss /= len(test_data)
         val_acc /= len(test_data)
 
+    model.save(file_name=f"saved{epoch}.pth")
 
     print(f"---------------- Epoch {epoch} ---------------------")
 
@@ -52,6 +53,7 @@ for epoch in range(epochs):
 
 # --------------- Test ----------------------
 test_loss, test_acc = 0, 0
+model.load()
 model.eval()
 
 with torch.inference_mode():
@@ -66,4 +68,3 @@ with torch.inference_mode():
 
 print(f"---------------- Testing ---------------------")
 print(f"Test loss: {test_loss:.2f} | Test Accuracy: {test_acc*100:.2f}%\n")
-model.save()
