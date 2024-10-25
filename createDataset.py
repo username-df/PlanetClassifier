@@ -43,12 +43,13 @@ BATCH_SIZE = 32
 transform = transforms.Compose([
     ImgResize(),
     PadToSquare(),
+    transforms.RandomRotation(36),
+    transforms.RandomHorizontalFlip(),
     transforms.ToTensor(),
     transforms.Normalize(mean=[0.26316062, 0.24574313, 0.24588147], 
                          std=[0.2500974, 0.23573072, 0.22842711])
 ])
     
-
 dataset = ImageFolder("ImageData", transform=transform)
 
 temp, test_set = train_test_split(dataset, test_size=0.2, random_state=0)
