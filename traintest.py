@@ -1,10 +1,22 @@
 import torch
 from convModel import model, lossfn, optimizer
 from create_dataset import train_data, val_data, test_data
+import matplotlib.pyplot as plt
 
 accfn = lambda y, prd: ((y == prd.argmax(dim=1)).sum()) / len(prd)
 
 epochs = 15
+
+def loss_curves(epochs, train, test):
+    xs = range(1, epochs+1)
+    plt.plot(xs, train, 'b-', label="Train Loss")
+    plt.plot(xs, test, 'b--', label="Test Loss")
+    plt.xlabel("Epochs")
+    plt.ylabel("Loss")
+    plt.legend()
+    plt.show()
+
+train_hst, val_hst = [], []
 
 for epoch in range(epochs):
     #------------- Train ----------------
@@ -43,6 +55,9 @@ for epoch in range(epochs):
 
     model.save(file_name=f"saved{epoch}.pth")
 
+    train_hst.append(train_loss.item())
+    val_hst.append(val_loss.item())
+
     print(f"---------------- Epoch {epoch} ---------------------")
 
     print(f"Train Loss: {train_loss:.2f} | Train Accuracy: {train_acc*100:.2f}%\n")
@@ -51,9 +66,11 @@ for epoch in range(epochs):
 
     print()
 
+
+loss_curves(epochs, train_hst, val_hst)
+
 # --------------- Test ----------------------
 test_loss, test_acc = 0, 0
-model.load()
 model.eval()
 
 with torch.inference_mode():
