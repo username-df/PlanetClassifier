@@ -1,6 +1,6 @@
 import torch
 from convModel import model, lossfn, optimizer
-from create_dataset import train_data, val_data, test_data
+from createDataset import train_data, val_data, test_data
 import matplotlib.pyplot as plt
 
 accfn = lambda y, prd: ((y == prd.argmax(dim=1)).sum()) / len(prd)

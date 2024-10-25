@@ -5,7 +5,7 @@ from io import BytesIO
 import base64
 from PIL import Image
 from convModel import model
-from create_dataset import transform, ImgResize
+from createDataset import transform, ImgResize
 
 app = Flask(__name__)
 model.load()

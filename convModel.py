@@ -53,7 +53,7 @@ class convModel(nn.Module):
     
     def test(self, str):
         from PIL import Image
-        from create_dataset import transform
+        from createDataset import transform
         x = Image.open(str)
         x = transform(x).unsqueeze(dim=0)
         x = self.convblock(x)
