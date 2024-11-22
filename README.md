@@ -1,1 +1,1 @@
-Planet image classification using a CNN and webscraped image data. 
+Planet image classification with a CNN and custom dataset.
