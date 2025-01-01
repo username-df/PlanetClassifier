@@ -1,15 +1,59 @@
 import os
 import torch
+import torchvision.transforms as transforms
 from flask import Flask, render_template, request,  url_for
 from io import BytesIO
 import base64
 from PIL import Image
 from convModel import model
-from createDataset import transform, ImgResize
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="templates")
 model.load()
 class_names = ["Earth", "Jupiter", "Mars", "Mercury", "Neptune", "Saturn", "Uranus", "Venus"]
+
+class ImgResize(object):
+    def __call__(self, img: Image, output_size=(256,256)):
+        image = img
+
+        original_width, original_height = image.size
+        aspect_ratio = original_width / original_height
+
+        target_width, target_height = output_size
+        if target_width / target_height > aspect_ratio:
+            target_width = int(target_height * aspect_ratio)
+        else:
+            target_height = int(target_width / aspect_ratio)
+
+        # Resize the image
+        resized_image = image.resize((target_width, target_height), Image.LANCZOS)
+
+        return resized_image
+
+class PadToSquare:
+    def __call__(self, img: Image):
+
+        width, height = img.size
+ 
+        target_size = max(width, height)
+
+        new_img = Image.new("RGB", (target_size, target_size), (0, 0, 0))
+  
+        x_offset = (target_size - width) // 2
+        y_offset = (target_size - height) // 2
+        
+        new_img.paste(img, (x_offset, y_offset))
+        
+        return new_img
+    
+transform = transforms.Compose([
+    ImgResize(),
+    PadToSquare(),
+    transforms.RandomRotation(36),
+    transforms.RandomHorizontalFlip(),
+    transforms.ToTensor(),
+    transforms.Normalize(mean=[0.26316062, 0.24574313, 0.24588147], 
+                         std=[0.2500974, 0.23573072, 0.22842711])
+])
 
 @app.route('/')
 def start():
@@ -48,4 +92,5 @@ def upload():
     return render_template('uploadpage.html', uploaded_img=uploaded_img, result=result)
 
 if __name__ == "__main__":
-    app.run()
+    port = int(os.environ.get('PORT', 8080))
+    app.run(host='0.0.0.0', port=port)
