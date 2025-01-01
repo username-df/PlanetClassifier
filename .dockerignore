@@ -1,0 +1,9 @@
+__pycache__
+.vscode
+gatherData
+ImageData
+.gitignore
+createDataset.py
+README.md
+test.jpg
+traintest.py
