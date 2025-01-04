@@ -6,3 +6,4 @@ model
 *.jpeg
 .vscode
 *.txt
+*.pem
