@@ -1,6 +1,9 @@
 *.exe
 ImageData
 __pycache__
+gatherData
+static
+templates
 model
 *.jpg
 *.jpeg
