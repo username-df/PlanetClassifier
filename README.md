@@ -2,8 +2,6 @@
 
 Built a basic convolutional neural network to pratice PyTorch and image classification. The purpose of the model is to classify user-given images of planets. 
 
-link: http://18.233.156.108:80/
-
 ## Training
 
 The model was trained on a custom dataset of around 800 images, which were obtained from publicly available images found on Google Images.
