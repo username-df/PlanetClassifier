@@ -8,34 +8,34 @@ class convModel(nn.Module):
 
         self.convblock = nn.Sequential(
             nn.Conv2d(in_channels=input,
-                    out_channels=hidden,
+                    out_channels=hidden*2,
                     kernel_size=3, 
                     stride=1,
                     padding=1),
             nn.AvgPool2d(kernel_size=3),
-            nn.BatchNorm2d(hidden),
+            nn.BatchNorm2d(hidden*2),
 
             nn.ReLU(),
             nn.Dropout(p=0.5),
 
-            nn.Conv2d(in_channels=hidden,
-                    out_channels=hidden,
+            nn.Conv2d(in_channels=hidden*2,
+                    out_channels=hidden*4,
                     kernel_size=3,
                     stride=1,
                     padding=1),
             nn.AvgPool2d(kernel_size=3),
-            nn.BatchNorm2d(hidden),
+            nn.BatchNorm2d(hidden*4),
 
             nn.ReLU(),
             nn.Dropout(p=0.5),
 
-            nn.Conv2d(in_channels=hidden,
-                      out_channels=hidden,
+            nn.Conv2d(in_channels=hidden*4,
+                      out_channels=hidden*8,
                       kernel_size=3,
                       stride=1,
                       padding=1),
             nn.AvgPool2d(kernel_size=3),
-            nn.BatchNorm2d(hidden),
+            nn.BatchNorm2d(hidden*8),
 
             nn.ReLU(),
             nn.Dropout(p=0.5)
@@ -43,11 +43,12 @@ class convModel(nn.Module):
 
         self.classifier = nn.Sequential(
             nn.Flatten(),
-            nn.Linear(hidden*9*9, output)
+            nn.Linear(hidden*8, output)
         )
     
     def forward(self, x):
         x = self.convblock(x)
+        x = nn.AvgPool2d(kernel_size=8)(x)
         x = self.classifier(x)
         return x
     
